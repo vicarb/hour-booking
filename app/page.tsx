@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import BookingForm from '@/components/BookingForm/BookingForm';
 import Head from 'next/head';
-
+import Dashboard from '@/components/Dashboard/Dashboard';
 
 
 
@@ -18,6 +18,7 @@ export default function Home() {
         Welcome to the Appointment Booking App
       </h1>
       <BookingForm  />
+      <Dashboard/>
     </main>
   </div>
   )
