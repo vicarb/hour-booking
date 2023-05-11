@@ -57,6 +57,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   }, [date]);
   
 
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
