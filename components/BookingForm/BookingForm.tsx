@@ -32,29 +32,28 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
     }
   };
 
+  
   useEffect(() => {
-    const fetchTimeSlots = async () => {
-      if (date) {
+    const fetchAvailableHours = async () => {
+      try {
         const formattedDate = formatISO(date, { representation: 'date' });
-        console.log("format",formattedDate);
-        
-        try {
-          const response: AxiosResponse = await axios.get(
-            `http://localhost:3000/appointments/time-slots?date=${formattedDate}`,
-          );
-    
-          setAvailableHours(response.data);
-        } catch (error) {
-          console.error('Error fetching time slots:', error);
-        }
-      } else {
-        setAvailableHours([]);
+        const response = await axios.get('http://localhost:3000/appointments/time-slots', {
+          params: {
+            date: formattedDate,
+            selectedService: selectedService // add this line
+          }
+        });
+        setAvailableHours(response.data);
+      } catch (error) {
+        console.error('Failed to fetch available hours:', error);
       }
     };
-    console.log("this is date",date);
-    
-    fetchTimeSlots();
-  }, [date]);
+  
+    if (date && selectedService) { // add selectedService check here
+      fetchAvailableHours();
+    }
+  }, [date, selectedService]); // add selectedService to dependency array
+  
   
 
   
