@@ -49,7 +49,7 @@ const Dashboard = () => {
                   <strong>Service:</strong> {appointment.selectedService}
                 </p>
                 <p>
-                  <strong>Customer:</strong> {appointment.customer}
+                  <strong>Customer:</strong> {appointment.customerName}
                 </p>
               </div>
             ))}

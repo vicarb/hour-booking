@@ -11,6 +11,7 @@ interface BookingFormProps {
   }
   
 const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
+  const [customerName, setCustomerName] = useState('');
   const [selectedService, setSelectedService] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -60,14 +61,20 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
-    if (date) {
+    if (date && customerName) {
       const formattedDate = formatISO(date, { representation: 'date' });
   
       try {
-        await axios.post('http://localhost:3000/appointments', { selectedService, date: formattedDate, time });
+        await axios.post('http://localhost:3000/appointments', {
+          selectedService,
+          date: formattedDate,
+          time,
+          customerName,
+        });
         alert('Appointment created');
         setDate(null);
         setTime('');
+        setCustomerName('');
       } catch (error) {
         console.error('Error creating appointment:', error);
         alert('Failed to create appointment');
@@ -93,6 +100,19 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   <h2 className="text-2xl font-semibold mb-4">Book an appointment</h2>
 
   <div className="mb-4">
+  <div className="mb-4">
+  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+    Name
+  </label>
+  <input
+    id="name"
+    type="text"
+    value={customerName}
+    onChange={(e) => setCustomerName(e.target.value)}
+    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+  />
+</div>
+
   
     <label htmlFor="service" className="block text-sm font-medium text-gray-700">
       Service
