@@ -3,12 +3,7 @@ import BookingForm from '@/components/BookingForm/BookingForm';
 import Head from 'next/head';
 
 
-const services = [
-  'Medical Check',
-  'Teeth Check',
-  'Massage',
-  'Lawyer Consultation',
-];
+
 
 export default function Home() {
   return (
@@ -22,7 +17,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-6">
         Welcome to the Appointment Booking App
       </h1>
-      <BookingForm services={services} />
+      <BookingForm  />
     </main>
   </div>
   )
