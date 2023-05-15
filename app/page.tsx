@@ -2,6 +2,8 @@ import Image from 'next/image';
 import BookingForm from '@/components/BookingForm/BookingForm';
 import Head from 'next/head';
 import Dashboard from '@/components/Dashboard/Dashboard';
+import { Register } from '@/components/Register/Register';
+import { Login } from '@/components/Login/Login';
 
 
 
@@ -19,6 +21,8 @@ export default function Home() {
       </h1>
       <BookingForm  />
       <Dashboard/>
+      <Login/>
+      <Register/>
     </main>
   </div>
   )
