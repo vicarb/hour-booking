@@ -41,7 +41,7 @@ const Dashboard = () => {
           <div key={date} className="col-span-1">
             <h3 className="text-lg font-semibold mb-2">{dayjs(date).format('MMMM D, YYYY')}</h3>
             {groupedAppointments[date].map((appointment) => (
-              <div key={appointment.id} className="border rounded shadow p-4 mb-4">
+              <div key={appointment._id} className="border rounded shadow p-4 mb-4">
                 <p>
                   <strong>Time:</strong> {appointment.time}
                 </p>
