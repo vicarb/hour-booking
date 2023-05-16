@@ -4,12 +4,12 @@ import axios, { AxiosResponse } from 'axios';
 import DatePicker from 'react-datepicker';
 import { formatISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import LoginModal from '../LoginModal/LoginModal';
+
 
 interface BookingFormProps {
     services: string[];
-}
-
+  }
+  
 const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   const [customerName, setCustomerName] = useState('');
   const [selectedService, setSelectedService] = useState('');
@@ -18,12 +18,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   const [availableHours, setAvailableHours] = useState<{ time: string; isAvailable: boolean }[]>([]);
   const [servicesData, setServicesData] = useState<Array<{ _id: string; name: string; description: string; duration: number }>>([]);
 
-  // Add isLoginModalOpen and setIsLoginModalOpen state
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  // LoginModal open and close handlers
-  const openLoginModal = () => setIsLoginModalOpen(true);
-  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   useEffect(() => {
     fetchServices();
@@ -38,6 +33,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
     }
   };
 
+  
   useEffect(() => {
     const fetchAvailableHours = async () => {
       try {
@@ -45,7 +41,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
         const response = await axios.get('http://localhost:3000/appointments/time-slots', {
           params: {
             date: formattedDate,
-            selectedService: selectedService 
+            selectedService: selectedService // add this line
           }
         });
         setAvailableHours(response.data);
@@ -54,40 +50,38 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
       }
     };
   
-    if (date && selectedService) {
+    if (date && selectedService) { // add selectedService check here
       fetchAvailableHours();
     }
-  }, [date, selectedService]);
+  }, [date, selectedService]); // add selectedService to dependency array
+  
+  
 
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
     if (date && customerName) {
-      openLoginModal(); // Open the LoginModal
-    }
-  };
-
-  const handleFormSubmitAfterLogin = async () => {
-    const formattedDate = formatISO(date, { representation: 'date' });
+      const formattedDate = formatISO(date, { representation: 'date' });
   
-    try {
-      await axios.post('http://localhost:3000/appointments', {
-        selectedService,
-        date: formattedDate,
-        time,
-        customerName,
-      });
-      alert('Appointment created');
-      setDate(null);
-      setTime('');
-      setCustomerName('');
-      closeLoginModal(); // Close the LoginModal
-    } catch (error) {
-      console.error('Error creating appointment:', error);
-      alert('Failed to create appointment');
+      try {
+        await axios.post('http://localhost:3000/appointments', {
+          selectedService,
+          date: formattedDate,
+          time,
+          customerName,
+        });
+        alert('Appointment created');
+        setDate(null);
+        setTime('');
+        setCustomerName('');
+      } catch (error) {
+        console.error('Error creating appointment:', error);
+        alert('Failed to create appointment');
+      }
     }
   };
-
+  
   const handleTimeChange = (e) => {
     const selectedTime = e.target.value;
     const selectedSlot = availableHours.find(hour => hour.time === selectedTime);
@@ -98,14 +92,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
       setTime(selectedTime);
     }
   };
+      
+      
+
   return (
-    
     <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-8">
-       <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={closeLoginModal} 
-        onLoginSuccess={handleFormSubmitAfterLogin} // Pass the form submission function to the LoginModal
-      />
   <h2 className="text-2xl font-semibold mb-4">Book an appointment</h2>
 
   <div className="mb-4">
@@ -188,10 +179,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
 </form>
 
   );
-
-  // Other code remains the same
-
-  // Return JSX in the next response
 };
 
 export default BookingForm;
