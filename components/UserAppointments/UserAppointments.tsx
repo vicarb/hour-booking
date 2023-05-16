@@ -1,13 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useUser } from '@/context/UserContext';
 
 const UserAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const {user} = useUser()
   useEffect(() => {
     const fetchMyAppointments = async () => {
       try {
@@ -19,7 +20,7 @@ const UserAppointments = () => {
         });
         console.log(response.data);
         
-        setUsername(response.data.username); // assuming username is returned in the response
+        setUsername(response.data.user); // assuming username is returned in the response
         setAppointments(response.data.appointments || []); // assuming appointments are returned in the response
         setLoading(false);
       } catch (error) {
@@ -37,7 +38,7 @@ const UserAppointments = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-2xl font-bold mb-4">Appointments for {username}</h1>
+      <h1 className="text-2xl font-bold mb-4">Appointments for {user}</h1>
       {appointments.map((appointment, index) => (
         <div key={index} className="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
           <div className="px-4 py-5 sm:px-6">

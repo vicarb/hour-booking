@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';  // add this import
+import { useUser } from '@/context/UserContext';
 
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {user, setUser} = useUser()
 
   const router = useRouter();  // get the router object
 
@@ -20,7 +22,7 @@ export const Login = () => {
 
       const token = response.data.access_token;
       localStorage.setItem('token', token);
-
+      setUser(username)
       // navigate to /my-appointments page
       router.push('/my-appointments');
     } catch (error) {
