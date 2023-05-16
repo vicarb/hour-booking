@@ -4,6 +4,9 @@ import axios from 'axios';
 
 const UserAppointments = () => {
   const [appointments, setAppointments] = useState([]);
+  const [username, setUsername] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMyAppointments = async () => {
@@ -14,24 +17,37 @@ const UserAppointments = () => {
             Authorization: `Bearer ${token}`, // include the token in the Authorization header
           },
         });
-        setAppointments(response.data);
+        console.log(response.data);
+        
+        setUsername(response.data.username); // assuming username is returned in the response
+        setAppointments(response.data.appointments || []); // assuming appointments are returned in the response
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching my appointments:', error);
+        setError(error.message);
+        setLoading(false);
       }
     };
 
     fetchMyAppointments();
   }, []);
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
-    <div>
-      <h1>My Appointments</h1>
+    <div className="container mx-auto px-4">
+      <h1 className="text-2xl font-bold mb-4">Appointments for {username}</h1>
       {appointments.map((appointment, index) => (
-        <div key={index}>
-          <p>{appointment.date}</p>
-          <p>{appointment.time}</p>
-          <p>{appointment.selectedService}</p>
-          {/* render other appointment properties as needed */}
+        <div key={index} className="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
+          <div className="px-4 py-5 sm:px-6">
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              {appointment.selectedService}
+            </h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+              {appointment.date} at {appointment.time}
+            </p>
+          </div>
         </div>
       ))}
     </div>
