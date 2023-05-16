@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import BookingForm from '@/components/BookingForm/BookingForm';
 import Head from 'next/head';

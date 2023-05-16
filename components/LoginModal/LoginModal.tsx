@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import axios from 'axios';
 import { useUser } from '@/context/UserContext';
+import { useEffect } from 'react';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -14,22 +15,32 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const {user, setUser} = useUser()
+  useEffect(() => {
+    console.log("user from effect", user);
+    if (user === username) {
+      onLoginSuccess();
+    }
+  }, [user]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUser(username)
+    console.log("user context",user);
+
 
     try {
       const response = await axios.post('http://localhost:3000/auth/login', {
         username,
         password,
       });
-      setUser(username)
-      console.log("user context",user);
+      
       
       const token = response.data.access_token;
       localStorage.setItem('token', token);
+      setUser(username);
 
-      onLoginSuccess();
+
     } catch (error) {
       console.error('Error during login:', error);
     }

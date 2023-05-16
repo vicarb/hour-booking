@@ -18,6 +18,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   const [time, setTime] = useState('');
   const [availableHours, setAvailableHours] = useState<{ time: string; isAvailable: boolean }[]>([]);
   const [servicesData, setServicesData] = useState<Array<{ _id: string; name: string; description: string; duration: number }>>([]);
+  const {user} = useUser()
 
   // Add isLoginModalOpen and setIsLoginModalOpen state
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -25,7 +26,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   // LoginModal open and close handlers
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
-
+  useEffect(() => {
+    console.log("user from effect booking", user);
+  }, [user]);
   useEffect(() => {
     fetchServices();
   }, []);
@@ -70,16 +73,20 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
 
   const handleFormSubmitAfterLogin = async () => {
     const formattedDate = formatISO(date, { representation: 'date' });
-  
+    console.log("userr from boo",user);
+    
     try {
       await axios.post('http://localhost:3000/appointments', {
         selectedService,
         date: formattedDate,
         time,
         customerName,
+        user
 
       });
       alert('Appointment created');
+      console.log("user from booking", user);
+      
       setDate(null);
       setTime('');
       setCustomerName('');
