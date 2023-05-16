@@ -1,10 +1,13 @@
 'use client'
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';  // add this import
 
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const router = useRouter();  // get the router object
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,14 +19,14 @@ export const Login = () => {
       });
 
       const token = response.data.access_token;
-      // store the token in localStorage or in a cookie
       localStorage.setItem('token', token);
 
-      alert('Login successful');
+      // navigate to /my-appointments page
+      router.push('/my-appointments');
     } catch (error) {
       console.error('Error during login:', error);
     }
-  };
+  };  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
