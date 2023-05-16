@@ -2,6 +2,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import axios from 'axios';
+import { useUser } from '@/context/UserContext';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface LoginModalProps {
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {user, setUser} = useUser()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +23,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
         username,
         password,
       });
-
+      setUser(username)
+      console.log("user context",user);
+      
       const token = response.data.access_token;
       localStorage.setItem('token', token);
 

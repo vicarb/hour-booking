@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import { formatISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import LoginModal from '../LoginModal/LoginModal';
+import { useUser } from '@/context/UserContext';
 
 interface BookingFormProps {
     services: string[];
@@ -76,6 +77,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
         date: formattedDate,
         time,
         customerName,
+
       });
       alert('Appointment created');
       setDate(null);
