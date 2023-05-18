@@ -51,6 +51,9 @@ const Dashboard = () => {
                 <p>
                   <strong>Customer:</strong> {appointment.customerName}
                 </p>
+                <p>
+                  <strong>User:</strong> {appointment.user}
+                </p>
               </div>
             ))}
           </div>

@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Dashboard from '@/components/Dashboard/Dashboard';
 import { Register } from '@/components/Register/Register';
 import { Login } from '@/components/Login/Login';
-
+import Landing from '@/components/Landing/Landing';
 
 
 export default function Home() {
@@ -20,6 +20,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-6">
         Welcome to the Appointment Booking App
       </h1>
+      <Landing/>
       <BookingForm  />
       <Dashboard/>
       <Login/>

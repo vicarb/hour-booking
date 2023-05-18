@@ -1,11 +1,31 @@
 'use client'
-import React from 'react';  // add this import
-import { useUser } from '@/context/UserContext';  // add this import
+import React, { useEffect, useState } from 'react';  // add useEffect and useState imports
+import axios from 'axios';  // add axios import
+import { useUser } from '@/context/UserContext';  // existing import
 
 export default function Profile() {
   const { user } = useUser();  // fetch the user data from the context
-  console.log(user);
-  
+  const [appointments, setAppointments] = useState(null);  // add appointments state
+
+  // fetch appointments when the user data is loaded
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token && user) {
+      axios
+        .get('http://localhost:3000/appointments/my', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setAppointments(response.data.appointments);
+        })
+        .catch((error) => {
+          console.error('Error fetching appointments:', error);
+        });
+    }
+  }, [user]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -28,6 +48,20 @@ export default function Profile() {
           <button className="mt-5 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Edit Profile
           </button>
+
+          {/* Render appointments if they exist */}
+          {appointments && (
+            <>
+              <h3 className="text-lg font-bold mt-5">Your appointments:</h3>
+              {appointments.map((appointment, index) => (
+                <div key={index}>
+                  <p>{appointment.date}</p>
+                  <p>{appointment.time}</p>
+                  <p>{appointment.selectedService}</p>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
