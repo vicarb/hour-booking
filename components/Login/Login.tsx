@@ -20,15 +20,17 @@ export const Login = () => {
         password,
       });
 
-      const token = response.data.access_token;
-      localStorage.setItem('token', token);
-      setUser(username)
-      // navigate to /my-appointments page
-      router.push('/my-appointments');
+      const { access_token, user } = response.data;  // extract user data from the response
+      localStorage.setItem('token', access_token);
+      setUser(user);  // store the user data in the context
+
+      // navigate to /profile page
+      router.push('/profile');  // change this to '/profile'
     } catch (error) {
       console.error('Error during login:', error);
     }
   };  
+
 
   return (
     <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
