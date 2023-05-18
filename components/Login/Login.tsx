@@ -19,13 +19,15 @@ export const Login = () => {
         username,
         password,
       });
-
+      console.log(response.data); // add this line
       const { access_token, user } = response.data;  // extract user data from the response
       localStorage.setItem('token', access_token);
       setUser(user);  // store the user data in the context
+      console.log("this is user",user);
+      
 
       // navigate to /profile page
-      router.push('/profile');  // change this to '/profile'
+      router.push('/profile');
     } catch (error) {
       console.error('Error during login:', error);
     }
