@@ -20,7 +20,7 @@ const UserAppointments = () => {
         });
         console.log(response.data);
         
-        setUsername(response.data.user); // assuming username is returned in the response
+        setUsername(user); // assuming username is returned in the response
         setAppointments(response.data.appointments || []); // assuming appointments are returned in the response
         setLoading(false);
       } catch (error) {
@@ -35,6 +35,8 @@ const UserAppointments = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
+  console.log("this",appointments);
+  
 
   return (
     <div className="container mx-auto px-4">
