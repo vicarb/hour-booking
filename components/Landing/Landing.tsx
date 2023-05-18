@@ -114,7 +114,7 @@ const Landing = () => {
                 />
                 
                 <div className="mb-4">
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="name" className="block text-xl font-semibold text-gray-700 mb-2">
                         Name
                     </label>
                     <input
@@ -122,19 +122,19 @@ const Landing = () => {
                         type="text"
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="mt-1 block w-full py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm text-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
 
-                <div className="mb-4">
-                    <label htmlFor="service" className="block text-sm font-medium text-gray-700">
+                <div className="mb-8">
+                    <label htmlFor="service" className="block text-xl font-semibold text-gray-700 mb-2">
                         Service
                     </label>
                     <select
                         id="service"
                         value={selectedService}
                         onChange={(e) => setSelectedService(e.target.value)}
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="mt-1 block w-full py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm text-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     >
                         <option value="">Select a service</option>
                         {servicesData.map((service) => (
@@ -145,38 +145,38 @@ const Landing = () => {
                     </select>
                 </div>
 
-                <div className="mb-4">
-                    <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+                <div className="mb-8">
+                    <label htmlFor="date" className="block text-xl font-semibold text-gray-700 mb-2">
                         Date
                     </label>
                     <DatePicker
                         selected={date}
-                        onChange={(date) => setDate(date)}
+                        onChange={(date: Date | null) => setDate(date)}
                         dateFormat="yyyy-MM-dd"
                         minDate={new Date()}
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="mt-1 block w-full py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm text-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
 
                 {date && (
-                    <div className="mb-4">
-                        <label htmlFor="time" className="block text-sm font-medium text-gray-700">
-                            Time
-                        </label>
-                        <select
-                            id="time"
-                            value={time}
-                            onChange={handleTimeChange}
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        >
-                            <option value="">Select an available hour</option>
-                            {availableHours.map((hour, index) => (
-                                <option key={index} value={hour.time} style={{ color: hour.isAvailable ? 'inherit' : 'gray' }}>
-                                    {hour.time} {hour.isAvailable ? '' : '(unavailable)'}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    <div className="mb-8">
+    <label htmlFor="time" className="block text-xl font-semibold text-gray-700 mb-2">
+        Time
+    </label>
+    <select
+        id="time"
+        value={time}
+        onChange={handleTimeChange}
+        className="mt-1 block w-full py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm text-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+    >
+        <option value="">Select an available hour</option>
+        {availableHours.map((hour, index) => (
+            <option key={index} value={hour.time} style={{ color: hour.isAvailable ? 'inherit' : 'gray' }}>
+                {hour.time} {hour.isAvailable ? '' : '(unavailable)'}
+            </option>
+        ))}
+    </select>
+</div>
                 )}
 
                 <button
