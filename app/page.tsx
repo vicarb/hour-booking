@@ -10,22 +10,19 @@ import Landing from '@/components/Landing/Landing';
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4">
+    <div>
     <Head>
       <title>Appointment Booking App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <main className="mt-10">
-      <h1 className="text-4xl font-bold mb-6">
-        Welcome to the Appointment Booking App
-      </h1>
+
       <Landing/>
       <BookingForm  />
       <Dashboard/>
       <Login/>
       <Register/>
-    </main>
-  </div>
+    </div>
+  
   )
 }
