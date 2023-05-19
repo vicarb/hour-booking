@@ -4,6 +4,7 @@ import { Fragment, useState } from 'react'
 import axios from 'axios';
 import { useUser } from '@/context/UserContext';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -105,11 +106,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
             </button>
           </div>
         </form>
+        <p className="text-gray-700 mt-4 text-lg">Don't have an account? <Link href="/register"><span className="text-blue-500 cursor-pointer">Register</span></Link></p>
       </div>
     </div>
   </Dialog>
 </Transition>
-
 
   )
 
