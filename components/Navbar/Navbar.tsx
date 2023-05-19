@@ -1,5 +1,5 @@
 import Link from 'next/link';
-
+import NavbarColorPicker from '../NavbarColorPicker/NavbarColorPicker';
 const Navbar = ({ onLoginClick, onRegisterClick }) => (
   <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6">
     <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -16,6 +16,7 @@ const Navbar = ({ onLoginClick, onRegisterClick }) => (
     <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div className="text-sm lg:flex-grow">
         {/* Add your other navigation links here */}
+        <NavbarColorPicker/>
       </div>
       <div>
       <Link href="/login">

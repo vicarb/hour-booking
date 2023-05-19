@@ -10,6 +10,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import ParentComponent from '@/components/ParentComponent/ParentComponent';
 
 
+
 export default function Home() {
   return (
     <div>
