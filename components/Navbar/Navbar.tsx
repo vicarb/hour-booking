@@ -19,12 +19,12 @@ const Navbar = () => (
       </div>
       <div>
         <Link href="/login">
-          <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600 transition-colors duration-150 mt-4 lg:mt-0">
+          <span className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600 transition-colors duration-150 mt-4 lg:mt-0 font-bold">
             Login
           </span>
         </Link>
         <Link href="/register">
-          <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-white bg-pink-500 hover:bg-pink-600 transition-colors duration-150 mt-4 lg:mt-0 ml-2">
+          <span className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-pink-500 hover:bg-pink-600 transition-colors duration-150 mt-4 lg:mt-0 ml-2 font-bold">
             Register
           </span>
         </Link>
