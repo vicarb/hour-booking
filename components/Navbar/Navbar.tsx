@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 const Navbar = () => (
-  <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+  <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6">
     <div className="flex items-center flex-shrink-0 text-white mr-6">
-      <span className="font-semibold text-xl tracking-tight">Your Website</span>
+      <span className="font-semibold text-2xl tracking-tight">Your Website</span>
     </div>
     <div className="block lg:hidden">
       <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -19,12 +19,12 @@ const Navbar = () => (
       </div>
       <div>
         <Link href="/login">
-          <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
+          <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600 transition-colors duration-150 mt-4 lg:mt-0">
             Login
           </span>
         </Link>
         <Link href="/register">
-          <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0 ml-2">
+          <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-white bg-pink-500 hover:bg-pink-600 transition-colors duration-150 mt-4 lg:mt-0 ml-2">
             Register
           </span>
         </Link>
