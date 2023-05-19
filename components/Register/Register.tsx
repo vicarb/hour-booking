@@ -1,10 +1,12 @@
 'use client'
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +18,7 @@ export const Register = () => {
       });
 
       alert('Registration successful');
+      router.push('/')
     } catch (error) {
       console.error('Error during registration:', error);
     }
