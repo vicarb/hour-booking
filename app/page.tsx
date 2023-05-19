@@ -7,6 +7,7 @@ import { Register } from '@/components/Register/Register';
 import { Login } from '@/components/Login/Login';
 import Landing from '@/components/Landing/Landing';
 import Navbar from '@/components/Navbar/Navbar';
+import ParentComponent from '@/components/ParentComponent/ParentComponent';
 
 
 export default function Home() {
@@ -16,8 +17,7 @@ export default function Home() {
       <title>Appointment Booking App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Navbar/>
-
+   <ParentComponent/>
 
       <Landing/>
       <BookingForm  />
