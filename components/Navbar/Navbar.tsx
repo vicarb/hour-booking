@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const Navbar = ({ onLoginClick }) => (
+const Navbar = ({ onLoginClick, onRegisterClick }) => (
   <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6">
     <div className="flex items-center flex-shrink-0 text-white mr-6">
       <span className="font-semibold text-2xl tracking-tight">Your Website</span>
@@ -27,7 +27,10 @@ const Navbar = ({ onLoginClick }) => (
       </span>
     </Link>
         <Link href="/register">
-          <span className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-pink-500 hover:bg-pink-600 transition-colors duration-150 mt-4 lg:mt-0 ml-2 font-bold">
+          <span 
+          className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-pink-500 hover:bg-pink-600 transition-colors duration-150 mt-4 lg:mt-0 ml-2 font-bold"
+          onClick={(e) => { e.preventDefault(); onRegisterClick(); }}
+          >
             Register
           </span>
         </Link>
