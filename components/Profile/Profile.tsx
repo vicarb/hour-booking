@@ -3,9 +3,17 @@ import React, { useEffect, useState } from 'react';  // add useEffect and useSta
 import axios from 'axios';  // add axios import
 import { useUser } from '@/context/UserContext';  // existing import
 
+interface Appointment {
+  date: string;
+  time: string;
+  selectedService: string;
+  // Add other properties of an appointment if applicable
+}
+
+
 export default function Profile() {
   const { user } = useUser();  // fetch the user data from the context
-  const [appointments, setAppointments] = useState(null);  // add appointments state
+  const [appointments, setAppointments] = useState<Appointment[] | null>(null);
 
   // fetch appointments when the user data is loaded
   useEffect(() => {

@@ -3,11 +3,15 @@ import { Dialog, Transition } from '@headlessui/react';
 import { useState } from 'react';
 import axios from 'axios';
 
-export const RegisterModal = ({ isOpen, onClose }) => {
+interface RegisterModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+export const RegisterModal = ({ isOpen, onClose }: RegisterModalProps) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {

@@ -14,11 +14,15 @@ const ParentComponent = () => {
 
   const openRegisterModal = () => setIsRegisterModalOpen(true);
   const closeRegisterModal = () => setIsRegisterModalOpen(false);
+  const handleLoginSuccess = () => {
+    // Handle successful login
+    // ...
+  };
 
   return (
     <>
       <Navbar onLoginClick={openLoginModal} onRegisterClick={openRegisterModal} />
-      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess} />
       <RegisterModal isOpen={isRegisterModalOpen} onClose={closeRegisterModal} />
       {/* other components */}
     </>

@@ -18,34 +18,37 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
   const {user, setUser} = useUser()
   useEffect(() => {
     console.log("user from effect", user);
-    if (user === username) {
+    if (user && user.username === username) {
       onLoginSuccess();
     }
+    
   }, [user]);
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUser(username)
-    console.log("user context",user);
-
-
+  
     try {
       const response = await axios.post('http://localhost:3000/auth/login', {
         username,
         password,
       });
       
-      
       const token = response.data.access_token;
       localStorage.setItem('token', token);
-      setUser(username);
-
-
+      
+      // You should set the user context here after the successful login request.
+      // Assuming the response data contains a 'user' object
+      if(response.data.user){
+        setUser(response.data.user);  // setting the user in the context
+      }else{
+        console.log("No user data in response");
+      }
     } catch (error) {
       console.error('Error during login:', error);
     }
   };
+  
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -106,7 +109,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
             </button>
           </div>
         </form>
-        <p className="text-gray-700 mt-4 text-lg">Don't have an account? <Link href="/register"><span className="text-blue-500 cursor-pointer">Register</span></Link></p>
+        <p className="text-gray-700 mt-4 text-lg">Dont have an account? <Link href="/register"><span className="text-blue-500 cursor-pointer">Register</span></Link></p>
       </div>
     </div>
   </Dialog>

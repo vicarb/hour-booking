@@ -7,13 +7,26 @@ import 'react-datepicker/dist/react-datepicker.css';
 import LoginModal from '../LoginModal/LoginModal';
 import { useUser } from '@/context/UserContext';
 
+interface AvailableHour {
+  time: string;
+  isAvailable: boolean;
+  // add more properties if needed
+}
+interface Service {
+  _id: string;
+  name: string;
+  // add more properties if needed
+}
+
 const Landing = () => {
+  
   const [customerName, setCustomerName] = useState('');
   const [selectedService, setSelectedService] = useState('');
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<Date | null>(null);
+
   const [time, setTime] = useState('');
-  const [availableHours, setAvailableHours] = useState([]);
-  const [servicesData, setServicesData] = useState([]);
+  const [availableHours, setAvailableHours] = useState<AvailableHour[]>([]);
+  const [servicesData, setServicesData] = useState<Service[]>([]);
   const {user} = useUser()
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -36,14 +49,19 @@ const Landing = () => {
   useEffect(() => {
     const fetchAvailableHours = async () => {
       try {
-        const formattedDate = formatISO(date, { representation: 'date' });
-        const response = await axios.get('http://localhost:3000/appointments/time-slots', {
-          params: {
-            date: formattedDate,
-            selectedService: selectedService 
-          }
-        });
-        setAvailableHours(response.data);
+        if (date) {
+          const dateObject = new Date(date);
+          const formattedDate = formatISO(dateObject, { representation: 'date' });
+          const response = await axios.get('http://localhost:3000/appointments/time-slots', {
+            params: {
+              date: formattedDate,
+              selectedService: selectedService 
+            }
+          });
+          setAvailableHours(response.data);
+        } else {
+          console.error('Date is null, cannot fetch available hours');
+        }
       } catch (error) {
         console.error('Failed to fetch available hours:', error);
       }
@@ -54,44 +72,50 @@ const Landing = () => {
     }
   }, [date, selectedService]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
     if (date && customerName) {
-      openLoginModal();
+      openLoginModal(); // Open the LoginModal
     }
   };
 
   const handleFormSubmitAfterLogin = async () => {
-    const formattedDate = formatISO(date, { representation: 'date' });
-    
-    try {
-      await axios.post('http://localhost:3000/appointments', {
-        selectedService,
-        date: formattedDate,
-        time,
-        customerName,
-        user
-
-      });
-      alert('Appointment created');
+    if (date) {
+      const dateObject = new Date(date);
+      const formattedDate = formatISO(dateObject, { representation: 'date' });
+      console.log("userr from boo",user);
       
-      setDate(null);
-      setTime('');
-      setCustomerName('');
-      closeLoginModal();
-    } catch (error) {
-      console.error('Error creating appointment:', error);
-      alert('Failed to create appointment');
+      try {
+        await axios.post('http://localhost:3000/appointments', {
+          selectedService,
+          date: formattedDate,
+          time,
+          customerName,
+          user
+        });
+        alert('Appointment created');
+        console.log("user from booking", user);
+        
+        setDate(null);
+        setTime('');
+        setCustomerName('');
+        closeLoginModal(); // Close the LoginModal
+      } catch (error) {
+        console.error('Error creating appointment:', error);
+        alert('Failed to create appointment');
+      }
+    } else {
+      console.error('Date is null, cannot proceed with form submit');
     }
   };
 
-  const handleTimeChange = (e) => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTime = e.target.value;
     const selectedSlot = availableHours.find(hour => hour.time === selectedTime);
     if (selectedSlot && !selectedSlot.isAvailable) {
       alert('This time slot is not available. Please select another.');
-      setTime('');
+      setTime(''); // reset selection
     } else {
       setTime(selectedTime);
     }

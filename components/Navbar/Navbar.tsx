@@ -1,6 +1,12 @@
 import Link from 'next/link';
 import NavbarColorPicker from '../NavbarColorPicker/NavbarColorPicker';
-const Navbar = ({ onLoginClick, onRegisterClick }) => (
+
+type NavbarProps = {
+  onLoginClick: () => void;
+  onRegisterClick: () => void;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => (
   <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6">
     <div className="flex items-center flex-shrink-0 text-white mr-6">
       <span className="font-semibold text-2xl tracking-tight">Your Website</span>

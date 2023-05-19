@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { ChromePicker } from 'react-color';
 
+interface Color {
+  hex: string;
+
+}
+
 const NavbarColorPicker = () => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState('#008811');
@@ -9,10 +14,14 @@ const NavbarColorPicker = () => {
     setIsColorPickerOpen(!isColorPickerOpen);
   };
 
-  const handleColorChange = (color) => {
+  const handleColorChange = (color: Color) => {
     setSelectedColor(color.hex);
-    document.querySelector('nav').style.backgroundColor = color.hex;
+    const navElement = document.querySelector('nav') as HTMLElement | null;
+    if (navElement) {
+      navElement.style.backgroundColor = color.hex;
+    }
   };
+  
 
   return (
     <div className="relative inline-flex">

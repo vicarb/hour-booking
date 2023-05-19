@@ -3,8 +3,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
+
+interface Appointment {
+  _id: string;
+  date: string;
+  time: string;
+  selectedService: string;
+  customerName: string;
+  user: string;
+}
+
 const Dashboard = () => {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
     fetchAppointments();
@@ -23,7 +33,7 @@ const Dashboard = () => {
   const sortedAppointments = appointments.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
 
   // Group sorted appointments by date
-  const groupedAppointments = sortedAppointments.reduce((grouped, appointment) => {
+  const groupedAppointments = sortedAppointments.reduce((grouped: {[key: string]: Appointment[]}, appointment) => {
     const date = dayjs(appointment.date).format('YYYY-MM-DD');
     if (!grouped[date]) {
       grouped[date] = [];
@@ -31,7 +41,6 @@ const Dashboard = () => {
     grouped[date].push(appointment);
     return grouped;
   }, {});
-
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Appointments Dashboard</h2>

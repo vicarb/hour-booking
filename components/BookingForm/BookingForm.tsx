@@ -11,10 +11,12 @@ interface BookingFormProps {
     services: string[];
 }
 
-const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
+const BookingForm = () => {
   const [customerName, setCustomerName] = useState('');
   const [selectedService, setSelectedService] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState<Date | null>(new Date());
+
+
   const [time, setTime] = useState('');
   const [availableHours, setAvailableHours] = useState<{ time: string; isAvailable: boolean }[]>([]);
   const [servicesData, setServicesData] = useState<Array<{ _id: string; name: string; description: string; duration: number }>>([]);
@@ -45,18 +47,24 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
   useEffect(() => {
     const fetchAvailableHours = async () => {
       try {
-        const formattedDate = formatISO(date, { representation: 'date' });
-        const response = await axios.get('http://localhost:3000/appointments/time-slots', {
-          params: {
-            date: formattedDate,
-            selectedService: selectedService 
-          }
-        });
-        setAvailableHours(response.data);
+        if (date) {
+          const dateObject = new Date(date);
+          const formattedDate = formatISO(dateObject, { representation: 'date' });
+          const response = await axios.get('http://localhost:3000/appointments/time-slots', {
+            params: {
+              date: formattedDate,
+              selectedService: selectedService 
+            }
+          });
+          setAvailableHours(response.data);
+        } else {
+          console.error('Date is null, cannot fetch available hours');
+        }
       } catch (error) {
         console.error('Failed to fetch available hours:', error);
       }
     };
+    
   
     if (date && selectedService) {
       fetchAvailableHours();
@@ -71,33 +79,39 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
     }
   };
 
+  
   const handleFormSubmitAfterLogin = async () => {
-    const formattedDate = formatISO(date, { representation: 'date' });
-    console.log("userr from boo",user);
-    
-    try {
-      await axios.post('http://localhost:3000/appointments', {
-        selectedService,
-        date: formattedDate,
-        time,
-        customerName,
-        user
-
-      });
-      alert('Appointment created');
-      console.log("user from booking", user);
+    if (date) {
+      const dateObject = new Date(date);
+      const formattedDate = formatISO(dateObject, { representation: 'date' });
+      console.log("userr from boo",user);
       
-      setDate(null);
-      setTime('');
-      setCustomerName('');
-      closeLoginModal(); // Close the LoginModal
-    } catch (error) {
-      console.error('Error creating appointment:', error);
-      alert('Failed to create appointment');
+      try {
+        await axios.post('http://localhost:3000/appointments', {
+          selectedService,
+          date: formattedDate,
+          time,
+          customerName,
+          user
+        });
+        alert('Appointment created');
+        console.log("user from booking", user);
+        
+        setDate(null);
+        setTime('');
+        setCustomerName('');
+        closeLoginModal(); // Close the LoginModal
+      } catch (error) {
+        console.error('Error creating appointment:', error);
+        alert('Failed to create appointment');
+      }
+    } else {
+      console.error('Date is null, cannot proceed with form submit');
     }
   };
+  
 
-  const handleTimeChange = (e) => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTime = e.target.value;
     const selectedSlot = availableHours.find(hour => hour.time === selectedTime);
     if (selectedSlot && !selectedSlot.isAvailable) {
@@ -107,6 +121,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ services }) => {
       setTime(selectedTime);
     }
   };
+
   return (
     
     <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-8">
