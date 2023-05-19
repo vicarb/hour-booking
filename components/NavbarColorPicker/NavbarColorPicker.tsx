@@ -3,7 +3,7 @@ import { ChromePicker } from 'react-color';
 
 const NavbarColorPicker = () => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('#000000');
+  const [selectedColor, setSelectedColor] = useState('#008811');
 
   const toggleColorPicker = () => {
     setIsColorPickerOpen(!isColorPickerOpen);
