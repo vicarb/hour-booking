@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import BookingForm from '@/components/BookingForm/BookingForm';
 import Head from 'next/head';
-import { Login } from '@/components/Login/Login';
 import Landing from '@/components/Landing/Landing';
 import Navbar from '@/components/Navbar/Navbar';
 import ParentComponent from '@/components/ParentComponent/ParentComponent';
@@ -20,8 +19,6 @@ export default function Home() {
 
       <Landing/>
       <BookingForm  />
-      
-      <Login/>
       
     </div>
   
