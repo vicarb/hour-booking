@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { UserProvider } from '@/context/UserContext'
@@ -18,6 +20,7 @@ export default function RootLayout({
       <body>
       <UserProvider>
       {children}
+      <ToastContainer /> 
       </UserProvider>
       </body>
     </html>

@@ -6,6 +6,7 @@ import { formatISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import LoginModal from '../LoginModal/LoginModal';
 import { useUser } from '@/context/UserContext';
+import { toast } from 'react-toastify';
 
 interface AvailableHour {
   time: string;
@@ -33,8 +34,10 @@ const Landing = () => {
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
 
+  
   useEffect(() => {
     fetchServices();
+    toast.info('Page loaded');
   }, []);
 
   const fetchServices = async () => {
@@ -81,34 +84,33 @@ const Landing = () => {
   };
 
   const handleFormSubmitAfterLogin = async () => {
-    if (date) {
-      const dateObject = new Date(date);
-      const formattedDate = formatISO(dateObject, { representation: 'date' });
-      console.log("userr from boo",user);
-      
-      try {
-        await axios.post('http://localhost:3000/appointments', {
-          selectedService,
-          date: formattedDate,
-          time,
-          customerName,
-          user: user?.username
-        });
-        alert('Appointment created');
-        console.log("user from booking", user);
-        
-        setDate(null);
-        setTime('');
-        setCustomerName('');
-        closeLoginModal(); // Close the LoginModal
-      } catch (error) {
-        console.error('Error creating appointment:', error);
-        alert('Failed to create appointment');
-      }
-    } else {
-      console.error('Date is null, cannot proceed with form submit');
+  if (date) {
+    const dateObject = new Date(date);
+    const formattedDate = formatISO(dateObject, { representation: 'date' });
+    
+    try {
+      await axios.post('http://localhost:3000/appointments', {
+        selectedService,
+        date: formattedDate,
+        time,
+        customerName,
+        user: user?.username // Ensure this is a string value, not an object.
+      });
+
+      toast.success('Appointment created');
+
+      setDate(null);
+      setTime('');
+      setCustomerName('');
+      closeLoginModal(); // Close the LoginModal
+    } catch (error) {
+      toast.error('Failed to create appointment');
     }
-  };
+  } else {
+    toast.error('Date is null, cannot proceed with form submit');
+  }
+};
+
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTime = e.target.value;
