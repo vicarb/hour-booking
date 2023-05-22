@@ -92,7 +92,7 @@ const Landing = () => {
           date: formattedDate,
           time,
           customerName,
-          user
+          user: user?.username
         });
         alert('Appointment created');
         console.log("user from booking", user);
