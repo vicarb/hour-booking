@@ -1,8 +1,8 @@
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// RootLayout.js
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { UserProvider } from '@/context/UserContext'
+import ToastProvider from '@/components/Toast/ToastProvider';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -12,16 +12,15 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
 }) {
   return (
     <html lang="en">
       <body>
-      <UserProvider>
-      {children}
-      <ToastContainer /> 
-      </UserProvider>
+        <UserProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </UserProvider>
       </body>
     </html>
   )

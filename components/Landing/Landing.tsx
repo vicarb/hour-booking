@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import DatePicker from 'react-datepicker';
 import { formatISO } from 'date-fns';
@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import LoginModal from '../LoginModal/LoginModal';
 import { useUser } from '@/context/UserContext';
 import { toast } from 'react-toastify';
+import ToastContext from '@/context/ToastContext';
 
 interface AvailableHour {
   time: string;
@@ -20,6 +21,8 @@ interface Service {
 }
 
 const Landing = () => {
+
+  const showToast = useContext(ToastContext);
   
   const [customerName, setCustomerName] = useState('');
   const [selectedService, setSelectedService] = useState('');
@@ -33,7 +36,10 @@ const Landing = () => {
 
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
-
+  useEffect(() => {
+    fetchServices();
+    toast.info('Page loaded');
+  }, []);
   
   useEffect(() => {
     fetchServices();
@@ -84,32 +90,32 @@ const Landing = () => {
   };
 
   const handleFormSubmitAfterLogin = async () => {
-  if (date) {
-    const dateObject = new Date(date);
-    const formattedDate = formatISO(dateObject, { representation: 'date' });
-    
-    try {
-      await axios.post('http://localhost:3000/appointments', {
-        selectedService,
-        date: formattedDate,
-        time,
-        customerName,
-        user: user?.username // Ensure this is a string value, not an object.
-      });
+    if (date) {
+      const dateObject = new Date(date);
+      const formattedDate = formatISO(dateObject, { representation: 'date' });
+      
+      try {
+        await axios.post('http://localhost:3000/appointments', {
+          selectedService,
+          date: formattedDate,
+          time,
+          customerName,
+          user: user?.username // Ensure this is a string value, not an object.
+        });
 
-      toast.success('Appointment created');
+        showToast('Appointment created'); // use the toast
 
-      setDate(null);
-      setTime('');
-      setCustomerName('');
-      closeLoginModal(); // Close the LoginModal
-    } catch (error) {
-      toast.error('Failed to create appointment');
+        setDate(null);
+        setTime('');
+        setCustomerName('');
+        closeLoginModal(); // Close the LoginModal
+      } catch (error) {
+        showToast('Failed to create appointment'); // use the toast
+      }
+    } else {
+      showToast('Date is null, cannot proceed with form submit'); // use the toast
     }
-  } else {
-    toast.error('Date is null, cannot proceed with form submit');
-  }
-};
+  };
 
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
