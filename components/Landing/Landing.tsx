@@ -6,8 +6,12 @@ import { formatISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import LoginModal from '../LoginModal/LoginModal';
 import { useUser } from '@/context/UserContext';
-import { toast } from 'react-toastify';
-import ToastContext from '@/context/ToastContext';
+import { useToast } from '@/context/ToastContext';
+
+
+
+
+
 
 interface AvailableHour {
   time: string;
@@ -22,7 +26,7 @@ interface Service {
 
 const Landing = () => {
 
-  const showToast = useContext(ToastContext);
+  const { showToast, hideToast } = useToast();
   
   const [customerName, setCustomerName] = useState('');
   const [selectedService, setSelectedService] = useState('');
@@ -36,14 +40,11 @@ const Landing = () => {
 
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
-  useEffect(() => {
-    fetchServices();
-    toast.info('Page loaded');
-  }, []);
+  
   
   useEffect(() => {
     fetchServices();
-    toast.info('Page loaded');
+
   }, []);
 
   const fetchServices = async () => {
@@ -102,21 +103,22 @@ const Landing = () => {
           customerName,
           user: user?.username // Ensure this is a string value, not an object.
         });
-
-        showToast('Appointment created'); // use the toast
-
+  
+        showToast("Appointment created successfully", "success");
+  
         setDate(null);
         setTime('');
         setCustomerName('');
         closeLoginModal(); // Close the LoginModal
       } catch (error) {
-        showToast('Failed to create appointment'); // use the toast
+        showToast("Failed to create appointment", "error");
       }
     } else {
-      showToast('Date is null, cannot proceed with form submit'); // use the toast
+      showToast("Date is not provided", "error");
     }
   };
 
+  
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTime = e.target.value;
