@@ -29,7 +29,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
     e.preventDefault();
   
     try {
-      const response = await axios.post('https://hour-booking-back.vercel.app/auth/login', {
+      const response = await axios.post('http://35.175.235.30/auth/login', {
         username,
         password,
       });
