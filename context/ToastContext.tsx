@@ -1,5 +1,4 @@
 'use client'
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type ToastContextType = {
@@ -44,7 +43,7 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
       if (show) {
         const timer = setTimeout(() => {
           hideToast();
-        }, 5000);
+        }, 2000);
         return () => clearTimeout(timer);
       }
     }, [show, message, type]);
@@ -63,7 +62,7 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
               transform: 'translate(-50%, -50%)',
               padding: '1rem', 
               borderRadius: '0.375rem', 
-              fontSize: '1.25rem', 
+              fontSize: '1.5625rem', // 25% larger than previous size
               backgroundColor: '#10B981', // Tailwind's green-600
               color: 'white', 
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', // Tailwind's shadow-2xl
@@ -74,6 +73,7 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
             {message}
           </div>
         )}
+        
         
         
         
