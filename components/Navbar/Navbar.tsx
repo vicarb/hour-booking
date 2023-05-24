@@ -11,7 +11,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6">
+    <nav className="relative flex items-center justify-between flex-wrap bg-blue-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <span className="font-semibold text-2xl tracking-tight">Your Website</span>
       </div>
@@ -26,24 +26,24 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
           </svg>
         </button>
       </div>
-      <div className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${open ? '' : 'hidden'} lg:flex`}>
-        <div className="text-sm lg:flex-grow">
+      <div onClick={() => setOpen(false)} className={`fixed inset-0 bg-blue-700 opacity-75 transform transition-transform duration-200 lg:relative lg:opacity-100 lg:translate-x-0 lg:bg-transparent ${open ? 'translate-x-0' : 'translate-x-full'} lg:w-auto lg:flex`}>
+        <div className="text-sm lg:flex-grow px-6 py-4">
           {/* Add your other navigation links here */}
           <NavbarColorPicker/>
         </div>
-        <div>
+        <div className="px-6 py-4">
           <Link href="/login">
-            <span 
+            <span
               className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600 transition-colors duration-150 mt-4 lg:mt-0 font-bold" 
-              onClick={(e) => { e.preventDefault(); onLoginClick(); }}
+              onClick={onLoginClick}
             >
               Login
             </span>
           </Link>
           <Link href="/register">
-            <span 
+            <span
               className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-pink-500 hover:bg-pink-600 transition-colors duration-150 mt-4 lg:mt-0 ml-2 font-bold"
-              onClick={(e) => { e.preventDefault(); onRegisterClick(); }}
+              onClick={onRegisterClick}
             >
               Register
             </span>
