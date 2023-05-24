@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
           </svg>
         </button>
       </div>
-      <div onClick={() => setOpen(false)} className={`fixed top-0 right-0 h-full w-full max-w-full bg-blue-500 transform transition-transform duration-200 lg:relative lg:translate-x-0 lg:bg-transparent ${open ? 'translate-x-0' : 'translate-x-full'} lg:w-auto lg:flex`}>
+      <div onClick={() => setOpen(false)} className={`fixed top-0 right-0 h-full w-full max-w-full overflow-y-auto bg-blue-500 transform transition-transform duration-200 lg:relative lg:translate-x-0 lg:bg-transparent ${open ? 'translate-x-0' : 'translate-x-full'} lg:w-auto lg:flex`}>
         <div className="text-sm lg:flex-grow px-6 py-4">
           {/* Add your other navigation links here */}
           <NavbarColorPicker/>
