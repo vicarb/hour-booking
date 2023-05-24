@@ -49,7 +49,7 @@ const Landing = () => {
 
   const fetchServices = async () => {
     try {
-      const response: AxiosResponse = await axios.get('http://35.175.235.30/catalogue');
+      const response: AxiosResponse = await axios.get('https://encalbuco.cl/catalogue');
       setServicesData(response.data);
     } catch (error) {
       console.error('Error fetching services:', error);
@@ -62,7 +62,7 @@ const Landing = () => {
         if (date) {
           const dateObject = new Date(date);
           const formattedDate = formatISO(dateObject, { representation: 'date' });
-          const response = await axios.get('http://35.175.235.30/appointments/time-slots', {
+          const response = await axios.get('https://encalbuco.cl/appointments/time-slots', {
             params: {
               date: formattedDate,
               selectedService: selectedService 
@@ -96,7 +96,7 @@ const Landing = () => {
       const formattedDate = formatISO(dateObject, { representation: 'date' });
       
       try {
-        await axios.post('http://35.175.235.30/appointments', {
+        await axios.post('https://encalbuco.cl/appointments', {
           selectedService,
           date: formattedDate,
           time,

@@ -21,7 +21,7 @@ export default function Profile() {
 
     if (token && user) {
       axios
-        .get('http://localhost:3000/appointments/my', {
+        .get('https://encalbuco.cl/appointments/my', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
