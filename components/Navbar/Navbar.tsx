@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Link from 'next/link';
 import NavbarColorPicker from '../NavbarColorPicker/NavbarColorPicker';
 
 type NavbarProps = {
@@ -32,22 +31,18 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
           <NavbarColorPicker/>
         </div>
         <div className="px-6 py-4">
-          <Link href="/login">
-            <span
+            <button
               className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600 transition-colors duration-150 mt-4 lg:mt-0 font-bold" 
               onClick={onLoginClick}
             >
               Login
-            </span>
-          </Link>
-          <Link href="/register">
-            <span
+            </button>
+            <button
               className="inline-block text-lg px-4 py-2 leading-none border rounded text-white bg-pink-500 hover:bg-pink-600 transition-colors duration-150 mt-4 lg:mt-0 ml-2 font-bold"
               onClick={onRegisterClick}
             >
               Register
-            </span>
-          </Link>
+            </button>
         </div>
       </div>
     </nav>
