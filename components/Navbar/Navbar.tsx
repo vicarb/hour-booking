@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import NavbarColorPicker from '../NavbarColorPicker/NavbarColorPicker';
+import { useUser } from '@/context/UserContext';
 
 type NavbarProps = {
   onLoginClick: () => void;
@@ -8,11 +9,15 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
   const [open, setOpen] = useState(false);
+  const { user } = useUser();
 
   return (
     <nav className="relative flex items-center justify-between flex-wrap bg-blue-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <span className="font-semibold text-2xl tracking-tight">Your Website</span>
+        {user && (
+  <span className="ml-4">{`Hello, ${user.username}`}</span> // Show username here
+)}
       </div>
       <div className="block lg:hidden">
         <button 
