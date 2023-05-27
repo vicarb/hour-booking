@@ -79,9 +79,13 @@ const Landing = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
-    if (date && customerName) {
-      openLoginModal(); // Open the LoginModal
+
+    // Only open the LoginModal if the user is not logged in
+    if (!user) {
+      openLoginModal(); 
+    } else {
+      // If the user is already logged in, proceed to handle form submission
+      handleFormSubmitAfterLogin();
     }
   };
 
