@@ -42,6 +42,7 @@ const ParentComponent = () => {
       <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} onLoginSuccess={handleLoginSuccess} />
       <RegisterModal isOpen={isRegisterModalOpen} onClose={closeRegisterModal} />
       {/* other components */}
+      
     </>
   );
 };
