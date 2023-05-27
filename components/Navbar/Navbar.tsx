@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick, userLogg
   return (
     <nav className="relative flex items-center justify-between flex-wrap bg-blue-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <span className="font-semibold text-2xl tracking-tight">Your Website</span>
+        <span className="font-semibold text-2xl tracking-tight">Booking Website</span>
         {userLoggedIn && (
           <span className="ml-4">{`Hello, ${user?.username}`}</span> // Show username here
         )}
