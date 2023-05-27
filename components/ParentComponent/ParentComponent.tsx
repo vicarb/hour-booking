@@ -2,12 +2,18 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import LoginModal from '../LoginModal/LoginModal';
-
 import { RegisterModal } from '../RegisterModal/RegisterModal';
+import { useUser } from '@/context/UserContext'; // Import useUser from the context file
+import { useToast } from '@/context/ToastContext';
+
+
 
 const ParentComponent = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
+  const {user, setUser} = useUser(); // use the useUser hook
+  const {showToast} = useToast();
 
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
@@ -15,8 +21,8 @@ const ParentComponent = () => {
   const openRegisterModal = () => setIsRegisterModalOpen(true);
   const closeRegisterModal = () => setIsRegisterModalOpen(false);
   const handleLoginSuccess = () => {
-    // Handle successful login
-    // ...
+    showToast("Login Successful"); // Show toast
+    setIsLoginModalOpen(false);
   };
 
   return (

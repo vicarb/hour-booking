@@ -8,11 +8,6 @@ import LoginModal from '../LoginModal/LoginModal';
 import { useUser } from '@/context/UserContext';
 import { useToast } from '@/context/ToastContext';
 
-
-
-
-
-
 interface AvailableHour {
   time: string;
   isAvailable: boolean;

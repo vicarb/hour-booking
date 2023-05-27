@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useUser } from '@/context/UserContext';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { useToast } from '@/context/ToastContext';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -15,6 +16,8 @@ interface LoginModalProps {
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const { showToast } = useToast(); 
   const {user, setUser} = useUser()
   useEffect(() => {
     console.log("user from effect", user);
