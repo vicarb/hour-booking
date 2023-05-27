@@ -40,11 +40,10 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick, userLogg
       >
         <div className="text-sm lg:flex-grow px-6 py-4">
           {/* Add your other navigation links here */}
-          <Link href="/">
-            <span className="text-lg px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600 transition-colors duration-150 mt-4 lg:mt-0 font-bold">
-              Home
-            </span>
-          </Link>
+          <Link href="/" as="button" className="text-lg px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600 transition-colors duration-150 mt-4 lg:mt-0 font-bold">
+  Home
+</Link>
+
           <NavbarColorPicker />
           {userLoggedIn && (
             <Link href="/profile">
