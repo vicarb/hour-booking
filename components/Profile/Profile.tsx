@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';  // add useEffect and useState imports
 import axios from 'axios';  // add axios import
 import { useUser } from '@/context/UserContext';  // existing import
+import ParentComponent from '../ParentComponent/ParentComponent';
 
 interface Appointment {
   date: string;
@@ -36,6 +37,8 @@ export default function Profile() {
   }, [user]);
 
   return (
+    <>
+    <ParentComponent/>
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full p-6 bg-white shadow-lg rounded-lg">
         <div className="flex items-center space-x-5">
@@ -73,5 +76,6 @@ export default function Profile() {
         </div>
       </div>
     </div>
+    </>
   )
 }
